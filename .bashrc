@@ -7,7 +7,6 @@ if [ -f /etc/profile ]; then
 fi
 
 PS1="\[\e[1;32m\]\u\[\e[1;37m\]@\[\e[1;33m\]\h\[\e[1;34m\]\w\[\e[1;31m\]\$(date +%H:%M) \$ \[\e[0m\]"
-#PS1='\[\e[31m\][\u@\h]\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 export PATH=$PATH:/home/mensjes/pepijno/bin
 export PATH=$PATH:/usr/lib64/openmpi/bin
@@ -21,8 +20,6 @@ export PATH=$PATH:~/.local/bin/
 setxkbmap -option compose:lwin
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
-#~/bin/./matrix
 
 if [ $(expr index "$-" i) -eq 0 ]; then
 	return
@@ -168,16 +165,6 @@ function authors()
 	git shortlog -s -n --all
 }
 
-#while [ true ]
-#do
-#  sleep 5
-#  gnome-terminal -x bash -c  "echo '___________             .__         .__         .__   
-#\__    ___/______  ____ |  |   ____ |  |   ____ |  |  
-#  |    |  \_  __ \/  _ \|  |  /  _ \|  |  /  _ \|  |  
-#  |    |   |  | \(  <_> )  |_(  <_> )  |_(  <_> )  |__
-#  |____|   |__|   \____/|____/\____/|____/\____/|____/'; read -n1" 
-#done &
-
 disp=`echo $DISPLAY`
 export DISPLAY=$disp
 
@@ -191,33 +178,9 @@ function dev-tmux()
 if [[ -z ${TMUX} ]]; then
 	tmux attach -t Pep || tmux -2 new-session -s Pep;
 else
-	./.matrix
+	#./.matrix
 	#cmatrix -u 6 -b -s
 fi
-
-
-#SCREENREGEXP='^screen[A-Za-z0-9._%+-]*'
-#SESSIONNAME='sessie'
-## Auto-screen
-#if [[ "$TERM" =~ $SCREENREGEXP ]]; then
-#	ISSCREENTERM=1
-#else
-#	ISSCREENTERM=0
-#fi
-#if [[ -n "$PS1" && "$ISSCREENTERM" = 0 ]]; then
-#	/usr/bin/screen -d -R -S "$SESSIONNAME"
-#elif [[ -n "$PS1" ]]; then
-#	if [[ "$HOSTNAME" != "$SSHEXTERN" &&\
-#		  "$HOSTNAME" != "$SQUARE" &&\
-#		  -z "$SSH_TTY" ]]; then
-#		if [[ "$ISSCREENTERM" = 0 ]]; then
-#			# On another workstation (except square) locally
-#	  			/usr/bin/screen -d -R -S "$SESSIONNAME"
-#			# ssh -X $SSHEXTERN
-#			# /bin/false
-#		fi
-#	fi
-#fi
 
 function git-up()
 {
@@ -236,9 +199,7 @@ function git-up()
           \\ '\\ /    \\  |     |  _/       /
            \\  \\      \\ |     | /        /
             \\  \\     \\        /"
-	git stash
-	git svn rebase
-	git stash apply
+	git push
 }
 
 function git-down()
@@ -258,8 +219,7 @@ function git-down()
           \\ '\\ /    \\  |     |  _/       /
            \\  \\      \\ |     | /        /
             \\  \\     \\        /"
-	git pull
-	git push
+	git pull --rebase
 }
 
 alias sl='ls'
@@ -275,7 +235,7 @@ function replace-newline()
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias config='`which git` --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 export GOPATH=~/gocode
 export PATH=$PATH:$GOPATH/bin
