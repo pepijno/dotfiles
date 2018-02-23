@@ -276,3 +276,6 @@ function replace-newline()
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+export GOPATH=~/gocode
+export PATH=$PATH:$GOPATH/bin
