@@ -191,7 +191,7 @@ function dev-tmux()
 if [[ -z ${TMUX} ]]; then
 	tmux attach -t Pep || tmux -2 new-session -s Pep;
 else
-	matrix
+	./.matrix
 	#cmatrix -u 6 -b -s
 fi
 
