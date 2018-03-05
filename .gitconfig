@@ -1,0 +1,15 @@
+[alias]
+    st = status
+    ci = commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+[svn]
+# push empty directory removals back to svn as directory deletes
+    rmdir = true
+[push]
+    default = current
+[user]
+    name = Pepijn Overbeeke
+    email = pepijn.overbeeke@gmail.com
+[color]
+    ui = auto

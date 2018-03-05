@@ -177,9 +177,6 @@ function dev-tmux()
 
 if [[ -z ${TMUX} ]]; then
 	tmux attach -t Pep || tmux -2 new-session -s Pep;
-else
-	#./.matrix
-	#cmatrix -u 6 -b -s
 fi
 
 function git-up()
