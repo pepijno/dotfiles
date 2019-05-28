@@ -1,0 +1,28 @@
+#!/bin/sh
+
+choice=$(echo -e "Nothing\nLock\nLogout\nSuspend\nHibernate\nReboot\nShutdown" | dmenu -i -p "What do you want to do")
+
+case "$choice" in
+	Lock)
+		/bin/sh ~/bin/customLock
+		;;
+	Logout)
+		i3-msg exit
+		;;
+	Suspend)
+		/bin/sh ~/bin/customLock && systemctl suspend
+		;;
+	Hibernate)
+		/bin/sh ~/bin/customLock && systemctl hibernate
+		;;
+	Reboot)
+		systemctl reboot
+		;;
+	Shutdown)
+		systemctl poweroff
+		;;
+	*)
+		exit 2
+esac
+
+exit 0
