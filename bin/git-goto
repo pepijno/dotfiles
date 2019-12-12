@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+function git() {
+	case $* in
+		goto* ) shift 1; command cd /Users/poverbeeke/Desktop/Repos/$(ls /Users/poverbeeke/Desktop/Repos/ | fzf) ;;
+		* ) command git "$@" ;;
+	esac
+}
+
+git goto

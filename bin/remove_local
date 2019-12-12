@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+BRANCHES=$(echo "$@" | grep "\[deleted\]" | awk '{print $5}')
+
+for BRANCH in $BRANCHES; do
+	tmp=${BRANCH%/*/*}
+	LOCAL_BRANCH="${BRANCH#"$tmp/"}"
+	git branch -D $LOCAL_BRANCH
+done

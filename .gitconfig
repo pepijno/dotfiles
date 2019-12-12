@@ -1,8 +1,21 @@
 [alias]
-    st = status
+	p = pull
+	f = "!f() { res=$(git fetch --all --prune 2>&1 | tee /dev/tty); /Users/poverbeeke/bin/remove_local \"$res\"; }; f"
+	st = status -u
+	a = add -p
+	co = checkout
+	cb = checkout -b
+	s = stash --include-untracked
+	sl = stash list
+	sp = stash pop
     ci = commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all --date-order
+	pr = "!f() { exec vsts code pr \"$@\"; }; f"
+	repo = "!f() { exec vsts code repo \"$@\"; }; f"
+	env = "!f() { /usr/bin/env; }; f"
+	ignore = "!f() { ([ ! -e .gitignore ] && touch .gitignore) | echo \"$1\n\" >>.gitignore; }; f"
+	reb = "!f() { CURR=$(git stash list | wc -l) && git stash --include-untracked && git checkout $1 && git pull && git checkout - && git rebase $1 && NOWW=$(git stash list | wc -l) && if [ \"$CURR\" != \"$NOWW\" ]; then git stash pop; fi;  }; f"
+	sb = "!f() { CURR=$(git stash list | wc -l) && git stash --include-untracked && git checkout $1 && git pull && NOWW=$(git stash list | wc -l) && if [ \"$CURR\" != \"$NOWW\" ]; then git stash pop; fi;  }; f"
 [svn]
 # push empty directory removals back to svn as directory deletes
     rmdir = true
@@ -13,3 +26,5 @@
     email = pepijn.overbeeke@gmail.com
 [color]
     ui = auto
+[core]
+    whitespace = cr-at-eol
