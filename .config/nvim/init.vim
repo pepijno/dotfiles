@@ -1,5 +1,7 @@
 "" Setup plugins
 
+let g:python3_host_prog = '/usr/bin/python3'
+
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-abolish'
@@ -13,19 +15,23 @@ Plug 'mhinz/vim-startify'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'SirVer/ultisnips' | Plug 'phux/vim-snippets'
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
-Plug 'phpactor/ncm2-phpactor', {'for': 'php'}
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'w0rp/ale'
+" Plug 'phpactor/ncm2-phpactor', {'for': 'php'}
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'w0rp/ale'
 Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
 Plug 'adoy/vim-php-refactoring-toolbox', {'for': 'php'}
-Plug 'morhetz/gruvbox'
+Plug 'dkasak/gruvbox'
 Plug 'phpstan/vim-phpstan'
 Plug 'dylanaraps/wal.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'neovimhaskell/haskell-vim'
+" Plug 'alx741/vim-hindent'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 if &shell =~# 'fish$'
@@ -34,10 +40,8 @@ endif
 
 set encoding=UTF-8
 
-colorscheme wal
-let g:lightline = {'colorscheme': 'wal'}
-set cursorline!
-nnoremap H :set cursorline!<CR>
+" colorscheme wal
+" let g:lightline = {'colorscheme': 'wal'}
 
 "" make sure to create ctags on saving
 " au BufWritePost *.php execute '! sh -c "if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 ; then ~/.git_template/hooks/ctags; fi"'
@@ -200,15 +204,15 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " PHP7
 let g:ultisnips_php_scalar_types = 1
 
-augroup ncm2
-  au!
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-  au User Ncm2PopupClose set completeopt=menuone
-augroup END
+" augroup ncm2
+"   au!
+"   autocmd BufEnter * call ncm2#enable_for_buffer()
+"   au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+"   au User Ncm2PopupClose set completeopt=menuone
+" augroup END
 
 " parameter expansion for selected entry via Enter
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
+" inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
 
 " cycle through completion entries with tab/shift+tab
 inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
@@ -230,6 +234,10 @@ let g:ale_fixers = {
   \ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
   \}
 let g:ale_fix_on_save = 1
+let g:ale_linters = {'c': ['gcc'], 'cpp': ['g++']}
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'
+
+let g:ale_cpp_gcc_executable = '/usr/bin/gcc'
 
 function! PHPModify(transformer)
     :update
@@ -285,3 +293,24 @@ autocmd FileType php inoremap <Leader>pne <Esc>:call IPhpExpandClass()<CR>
 autocmd FileType php noremap <Leader>pne :call PhpExpandClass()<CR>
 let g:php_namespace_sort_after_insert=1
 let g:phpstan_analyse_level = 4
+
+set background=dark
+"set background=light
+let g:gruvbox_contrast_light="hard"
+let g:gruvbox_italic=1
+let g:gruvbox_invert_signs=0
+let g:gruvbox_improved_strings=0
+let g:gruvbox_improved_warnings=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_contrast_dark="hard"
+colorscheme gruvbox
+
+set cursorline!
+
+autocmd BufRead,BufNewFile   *.hs set expandtab
+autocmd BufRead,BufNewFile   *.hs set tabstop=2
+autocmd BufRead,BufNewFile   *.hs set shiftwidth=2
+autocmd BufRead,BufNewFile   *.hs set softtabstop=2
+
+" vim gitgutter
+set updatetime=100
