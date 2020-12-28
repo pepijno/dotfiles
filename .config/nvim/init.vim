@@ -21,7 +21,7 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
 " Plug 'phpactor/ncm2-phpactor', {'for': 'php'}
 " Plug 'ncm2/ncm2-ultisnips'
-" Plug 'w0rp/ale'
+" Plug 'dense-analysis/ale'
 Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
 Plug 'adoy/vim-php-refactoring-toolbox', {'for': 'php'}
 Plug 'dkasak/gruvbox'
@@ -32,6 +32,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'neovimhaskell/haskell-vim'
 " Plug 'alx741/vim-hindent'
 Plug 'airblade/vim-gitgutter'
+Plug 'sdiehl/vim-ormolu'
 call plug#end()
 
 if &shell =~# 'fish$'
@@ -46,7 +47,7 @@ set encoding=UTF-8
 "" make sure to create ctags on saving
 " au BufWritePost *.php execute '! sh -c "if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 ; then ~/.git_template/hooks/ctags; fi"'
 
-autocmd Filetype php setlocale ts=4 sts=4 sw=4
+" autocmd Filetype php setlocale ts=4 sts=4 sw=4
 
 " Turn on syntax highlighting
 syntax on
@@ -295,7 +296,7 @@ let g:php_namespace_sort_after_insert=1
 let g:phpstan_analyse_level = 4
 
 set background=dark
-"set background=light
+" set background=light
 let g:gruvbox_contrast_light="hard"
 let g:gruvbox_italic=1
 let g:gruvbox_invert_signs=0
@@ -314,3 +315,15 @@ autocmd BufRead,BufNewFile   *.hs set softtabstop=2
 
 " vim gitgutter
 set updatetime=100
+
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+let g:haskell_indent_case = 2
+let g:haskell_indent_case_alternative = 1
+
+nnoremap tf :call RunOrmolu()<CR>
